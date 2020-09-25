@@ -1,0 +1,39 @@
+    async function getRefrehToken(client) {
+    const currentTimestamp = Date.now();
+    if(cache.token !== null) {
+        if(cache.lastValidation + 60 * 60 * 1000 < currentTimestamp) {
+            await axios.get('https://id.twitch.tv/oauth2/validate', {
+                headers: {
+                    'Client-ID': 'l31z7q3rno57veu2nh6tfkho1zyl16',
+                    Authorization: 'Bearer' + cache.token
+                }
+            }).catch(() => getAcessToken(client))
+        } else {
+            return cache.token
+        }
+    } else {
+        return getAcessToken(client);
+    }
+    }
+
+
+
+GET 'https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=l31z7q3rno57veu2nh6tfkho1zyl16&redirect_uri=http://localhost&scope=viewing_activity_read
+
+2dlfe5p263dwva07rgrspfipbmhwz4
+80jyjsltwrgj4fwyqjkgfw3zl90yzw
+
+
+axios.get(url, options)
+.then((response) => {
+  console.log(response)
+}, (error) => {
+  console.log(error)
+});
+
+
+    cache.token = res.data.access_token;
+    cache.lastValidation = Date.now();
+
+            client_secret: '8dmddwqnjjm36r2kvlrwuuuzwmhz5k',
+                    grant_type: 'client_credentials',
